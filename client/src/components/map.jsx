@@ -4,6 +4,7 @@ import GoogleMap from 'google-map-react';
 import GOOGLE_API_KEY from '../../../config/googleAPI.js';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import Modal from './modal.jsx';
 
 const Marker = ({ children }) => {
   return children;
@@ -16,8 +17,11 @@ class Map extends React.Component {
       latitude: 0,
       longitude: 0,
       potHoleLocation: [],
+      displayModal: false,
+      currentPotHole: {},
     };
-    this.displayModal.bind(this);
+    this.displayModalFunction = this.displayModalFunction.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
   async componentDidMount() {
     const coords = await this.currentLocation();
@@ -65,8 +69,18 @@ class Map extends React.Component {
     };
   }
 
-  displayModal() {
-    console.log('testing');
+  displayModalFunction(potHole) {
+    console.log('testing', potHole);
+    this.setState({
+      currentPotHole: potHole,
+      displayModal: !this.state.displayModal,
+    });
+  }
+
+  closeModal() {
+    this.setState({
+      displayModal: !this.state.displayModal,
+    });
   }
 
   render() {
@@ -94,12 +108,24 @@ class Map extends React.Component {
                     lng={item.longitude}
                   >
                     {/* <Button variant='primary'>Click here</Button> */}
-                    <span style={{ fontSize: '35px' }}>&#10071;</span>
+                    <span
+                      style={{ fontSize: '35px' }}
+                      onClick={() => {
+                        this.displayModalFunction(item);
+                      }}
+                    >
+                      &#10071;
+                    </span>
                   </Marker>
                 );
               })
             : ''}
         </GoogleMap>
+        <Modal
+          displayModal={this.state.displayModal}
+          currentPothole={this.state.currentPotHole}
+          close={this.closeModal}
+        ></Modal>
       </div>
     );
   }
