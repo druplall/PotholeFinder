@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
@@ -35,7 +34,6 @@ class App extends React.Component {
             <Map></Map>
           </Col>
         </Row>
-        <Button variant='primary'>Click here</Button>
       </Container>
     );
   }

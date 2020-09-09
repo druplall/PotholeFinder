@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import Photo from './photo.jsx';
 
 const modal = (props) => {
+  const [showCamera, setShow] = useState(false);
+
+  useEffect(() => {}, [showCamera]);
+
   return (
     <div>
       <Modal
         show={props.displayModal}
-        onHide={props.close}
+        onHide={() => {
+          setShow(false);
+          props.close();
+        }}
         aria-labelledby='contained-modal-title-vcenter'
         centered
       >
@@ -27,7 +35,20 @@ const modal = (props) => {
             <p>Lat: {props.currentPothole.latitude}</p>
             <p>Long: {props.currentPothole.longitude}</p>
             {props.currentPothole.descriptor === 'UserCreated' ? (
-              <Button variant='success'> Click to take Pic ! </Button>
+              <Button
+                variant='success'
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShow(true);
+                }}
+              >
+                Click to take Pic !
+              </Button>
+            ) : (
+              ''
+            )}
+            {showCamera && props.currentPothole.descriptor === 'UserCreated' ? (
+              <Photo></Photo>
             ) : (
               ''
             )}
