@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const modal = (props) => {
   return (
@@ -23,6 +24,13 @@ const modal = (props) => {
             <p>Created Date: {props.currentPothole.created_date}</p>
             <p>Street Name: {props.currentPothole.street_name}</p>
             <p>City: {props.currentPothole.city}</p>
+            <p>Lat: {props.currentPothole.latitude}</p>
+            <p>Long: {props.currentPothole.longitude}</p>
+            {props.currentPothole.descriptor === 'UserCreated' ? (
+              <Button variant='success'> Click to take Pic ! </Button>
+            ) : (
+              ''
+            )}
           </div>
         </Modal.Body>
       </Modal>

@@ -22,6 +22,7 @@ class Map extends React.Component {
     };
     this.displayModalFunction = this.displayModalFunction.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.addNewMarker = this.addNewMarker.bind(this);
   }
   async componentDidMount() {
     const coords = await this.currentLocation();
@@ -70,7 +71,6 @@ class Map extends React.Component {
   }
 
   displayModalFunction(potHole) {
-    console.log('testing', potHole);
     this.setState({
       currentPotHole: potHole,
       displayModal: !this.state.displayModal,
@@ -80,6 +80,34 @@ class Map extends React.Component {
   closeModal() {
     this.setState({
       displayModal: !this.state.displayModal,
+    });
+  }
+
+  async addNewMarker(position) {
+    let getCity;
+    let getStreetName;
+    try {
+      const getAddress = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.latitude},${this.state.longitude}&key=${GOOGLE_API_KEY}`
+      );
+      console.log(getAddress);
+      getCity = getAddress.data.results[2].formatted_address.split(',');
+      getStreetName = getAddress.data.results[0].formatted_address.split(',');
+    } catch (error) {}
+
+    let tempObject = {
+      descriptor: 'UserCreated',
+      latitude: position.lat,
+      longitude: position.lng,
+      street_name: getStreetName[0],
+      city: getCity[0],
+      created_date: new Date().toLocaleString(),
+    };
+    let newState = this.state.potHoleLocation.slice();
+    newState.push(tempObject);
+    console.log('Changing state: ', newState);
+    this.setState({
+      potHoleLocation: newState,
     });
   }
 
@@ -97,24 +125,32 @@ class Map extends React.Component {
             lng: this.state.longitude,
           }}
           defaultZoom={10}
+          yesIWantToUseGoogleMapApiInternals
+          onClick={(position) => {
+            console.log(position);
+            this.addNewMarker(position);
+          }}
         >
           {this.state.potHoleLocation.length !== 0
             ? this.state.potHoleLocation.map((item) => {
-                //console.log(item);
                 return (
                   <Marker
                     key={item.unique_key}
                     lat={item.latitude}
                     lng={item.longitude}
                   >
-                    {/* <Button variant='primary'>Click here</Button> */}
                     <span
                       style={{ fontSize: '35px' }}
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault();
                         this.displayModalFunction(item);
                       }}
                     >
-                      &#10071;
+                      {item.descriptor === 'UserCreated' ? (
+                        <span style={{ fontSize: '25px' }}>&#x274C;</span>
+                      ) : (
+                        <span>&#x2757;</span>
+                      )}
                     </span>
                   </Marker>
                 );
