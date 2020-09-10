@@ -48,7 +48,7 @@ class App extends React.Component {
         <Row>
           <Col xs={6}>
             <Button
-              style={{ marginTop: '10px' }}
+              style={{ marginTop: '30px' }}
               variant='warning'
               onClick={() => {
                 this.setState({
@@ -64,7 +64,7 @@ class App extends React.Component {
             ></WeatherModal>
           </Col>
           <Col xs={6}>
-            <Button style={{ marginTop: '10px' }} variant='info'>
+            <Button style={{ marginTop: '30px' }} variant='info'>
               New York City Budget Data
             </Button>
           </Col>

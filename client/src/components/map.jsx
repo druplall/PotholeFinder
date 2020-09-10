@@ -19,10 +19,13 @@ class Map extends React.Component {
       potHoleLocation: [],
       displayModal: false,
       currentPotHole: {},
+      userInput: '',
     };
     this.displayModalFunction = this.displayModalFunction.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.addNewMarker = this.addNewMarker.bind(this);
+    this.handleInput = this.handleInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   async componentDidMount() {
     const coords = await this.currentLocation();
@@ -44,7 +47,7 @@ class Map extends React.Component {
         {
           params: {
             city: `${getCity[0]}`,
-            $LIMIT: 5,
+            $LIMIT: 25,
             $WHERE: 'status="Open"',
           },
         }
@@ -111,9 +114,54 @@ class Map extends React.Component {
     });
   }
 
+  handleInput(e) {
+    this.setState({ userInput: e.target.value });
+  }
+
+  async handleSubmit(e) {
+    e.preventDefault();
+    console.log('This is the currentState: ', this.state.userInput);
+    //let getCity = this.state.userInput;
+    try {
+      const getPotHoles = await axios.get(
+        `https://data.cityofnewyork.us/resource/fed5-ydvq.json`,
+        {
+          params: {
+            city: this.state.userInput,
+            $LIMIT: 25,
+            $WHERE: 'status="Open"',
+          },
+        }
+      );
+      console.log('Astoria Pothole data: ', getPotHoles.data);
+      let newState = this.state.potHoleLocation.slice();
+      //newState.push(getPotHoles.data);
+      for (let i = 0; i < getPotHoles.data.length; i++) {
+        newState.push(getPotHoles.data[i]);
+      }
+      console.log('this is the new state:', newState);
+      this.setState({
+        potHoleLocation: newState,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   render() {
     return (
       <div style={{ height: '80vh', width: '100%', marginTop: '10px' }}>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Search :
+            <input
+              type='text'
+              placeholder='Enter City...'
+              onChange={this.handleInput}
+            />
+            <input type='submit' value='Submit' />
+          </label>
+        </form>
         <GoogleMap
           bootstrapURLKeys={{ key: GOOGLE_MAP_API }}
           defaultCenter={{
