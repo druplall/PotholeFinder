@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import WeatherAPIKey from '../../../config/weatherAPI.js';
+import WeatherAPIKey from '/Users/deodatruplall/Workspace/PotholeFinder/config/weatherAPI.js';
 import axios from 'axios';
 
 const WeatherModal = (props) => {

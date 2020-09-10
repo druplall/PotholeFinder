@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import GoogleMap from 'google-map-react';
 //import GOOGLE_API_KEY from '../../../config/googleAPI.js';
-import GOOGLE_MAP_API from '../../../config/googleAPI.js';
+import GOOGLE_MAP_API from '/Users/deodatruplall/Workspace/PotholeFinder/config/googleAPI.js';
 
 //import GOOGLE_API_KEY from './PotholeFinder/config/googleAPI.js';
 import Button from 'react-bootstrap/Button';
