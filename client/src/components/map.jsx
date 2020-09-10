@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import GoogleMap from 'google-map-react';
-import GOOGLE_API_KEY from '../../../config/googleAPI.js';
+//import GOOGLE_API_KEY from '../../../config/googleAPI.js';
+import GOOGLE_MAP_API from '../../../config/googleAPI.js';
+
+//import GOOGLE_API_KEY from './PotholeFinder/config/googleAPI.js';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import Modal from './modal.jsx';
@@ -34,7 +37,7 @@ class Map extends React.Component {
 
     try {
       const getAddress = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.latitude},${this.state.longitude}&key=${GOOGLE_API_KEY}`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.latitude},${this.state.longitude}&key=${GOOGLE_MAP_API}`
       );
 
       let getCity = getAddress.data.results[2].formatted_address.split(',');
@@ -88,7 +91,7 @@ class Map extends React.Component {
     let getStreetName;
     try {
       const getAddress = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.latitude},${this.state.longitude}&key=${GOOGLE_API_KEY}`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.latitude},${this.state.longitude}&key=${GOOGLE_MAP_API}`
       );
       console.log(getAddress);
       getCity = getAddress.data.results[2].formatted_address.split(',');
@@ -115,7 +118,7 @@ class Map extends React.Component {
     return (
       <div style={{ height: '80vh', width: '100%', marginTop: '10px' }}>
         <GoogleMap
-          bootstrapURLKeys={{ key: GOOGLE_API_KEY }}
+          bootstrapURLKeys={{ key: GOOGLE_MAP_API }}
           defaultCenter={{
             lat: this.state.latitude,
             lng: this.state.longitude,
