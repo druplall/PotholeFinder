@@ -5,9 +5,7 @@ const Photo = (props) => {
   const [displayPhoto, setPhoto] = useState(false);
   const [imageSrc, setImageSrc] = useState('');
 
-  useEffect(() => {
-    console.log('re-render the photo');
-  }, [displayPhoto]);
+  useEffect(() => {}, [displayPhoto]);
 
   function cameraControl() {
     navigator.mediaDevices
