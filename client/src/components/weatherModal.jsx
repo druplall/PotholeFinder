@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import WeatherAPIKey from '../../../config/weatherapi.js';
+import WeatherAPIKey from '../../config/weatherapi.js';
 import axios from 'axios';
 
 const WeatherModal = (props) => {
