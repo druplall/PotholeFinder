@@ -1,5 +1,9 @@
 node_modules
 package-lock.json
+<<<<<<< HEAD
 client/config
+=======
+config
+>>>>>>> a73a2bda93f063c0cc2df33e80161d864eba8b03
 .DS_Store
 client/dist/bundle.js
